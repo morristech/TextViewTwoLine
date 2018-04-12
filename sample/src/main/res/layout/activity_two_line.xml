@@ -53,17 +53,20 @@
 
         <com.kimcy929.textviewtwoline.TextViewTwoLine
             android:id="@+id/textViewTwoLine2"
-            style="@style/TextViewTwoTextLineTextTitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/switchCompat2"
-            app:appCompatLeftDrawable="@drawable/ic_volume_up_black_24dp"
             app:textTitle="@string/shutter_sound"
-            app:textDescription="@string/shutter_sound_description"
+            app:textDescription="@string/shutter_sound"
             app:keepDescent="false"
             app:drawableTintColor="@color/colorTestDrawableTint"
             app:titleColor="@color/colorTestTitle"
             app:TextViewTwoLineDescriptionTextStyle="italic"
             app:titleFontFamily="@null"
-            app:descriptionFontFamily="@null"/>
+            app:descriptionFontFamily="@null"
+            android:paddingStart="@dimen/keyline_horizontal"
+            android:paddingEnd="?attr/listPreferredItemPaddingRight"/>
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switchCompat2"

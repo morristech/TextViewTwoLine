@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout btnHideVideo = findViewById(R.id.btnHideVideo);
         RelativeLayout btnTranslate = findViewById(R.id.btnTranslate);
+        RelativeLayout btnShutterSound = findViewById(R.id.btnShutterSound);
 
         btnHideVideo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnTranslate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnShutterSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

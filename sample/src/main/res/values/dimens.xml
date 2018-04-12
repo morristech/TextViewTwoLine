@@ -2,4 +2,5 @@
 <resources>
     <dimen name="drawable_padding">24dp</dimen>
     <dimen name="item_padding">4dp</dimen>
+    <dimen name="keyline_horizontal">72dp</dimen>
 </resources>
