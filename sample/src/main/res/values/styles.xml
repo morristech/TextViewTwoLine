@@ -14,12 +14,13 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:paddingStart">@dimen/drawable_padding</item> <!-- 24dp for center -->
         <item name="android:paddingEnd">?attr/listPreferredItemPaddingRight</item>
-        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="drawablePadding">@dimen/drawable_padding</item> <!-- 24dp for center -->
         <item name="drawableTintColor">@color/colorDrawableTint</item>
-        <item name="titleFontFamily">@font/value_bold</item>
-        <item name="descriptionFontFamily">@font/value_regular</item>
+        <item name="titleFontFamily">@font/vollkorn_bold</item>
+        <item name="descriptionFontFamily">@font/vollkorn_semibold</item>
         <item name="textTitleColor">@color/colorDrawableTint</item>
+        <item name="textDescriptionColor">@color/colorTextDescription</item>
         <item name="keepDescent">true</item>
     </style>
 

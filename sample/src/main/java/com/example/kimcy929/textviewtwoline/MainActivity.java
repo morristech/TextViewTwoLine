@@ -7,10 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.kimcy929.localeutils.LocaleUtils;
 import com.kimcy929.textviewtwoline.TextViewTwoLine;
 
 public class MainActivity extends AppCompatActivity {
 
+    public MainActivity() {
+        //See MyApp class to config the language
+        LocaleUtils.updateConfig(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
         btnChangeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                textViewTwoLine.setTextTitle(getString(R.string.shutter_sound));
-                  textViewTwoLine.setTextDescription(getString(R.string.shutter_sound_description));
+                textViewTwoLine.setTextTitle(getString(R.string.shutter_sound));
+                textViewTwoLine.setTextDescription(getString(R.string.shutter_sound_description));
 
-//                textViewTwoLine.setLeftDrawable(R.drawable.ic_vibration_black_24dp);
+                textViewTwoLine.setLeftDrawable(R.drawable.ic_vibration_black_24dp);
 //
-//                textViewTwoLine.setText(null, "");
+//               textViewTwoLine.setText(null, "");
             }
         });
 

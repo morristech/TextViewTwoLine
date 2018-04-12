@@ -2,6 +2,10 @@ package com.example.kimcy929.textviewtwoline;
 
 import android.app.Application;
 
+import com.kimcy929.localeutils.LocaleUtils;
+
+import java.util.Locale;
+
 import timber.log.Timber;
 
 public class MyApp extends Application {
@@ -10,6 +14,12 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Timber.plant(new Timber.DebugTree());
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+
+        Locale locale = new Locale("ar");
+
+        LocaleUtils.setLocale(locale);
     }
 }
