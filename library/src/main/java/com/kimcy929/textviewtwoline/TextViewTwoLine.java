@@ -249,8 +249,8 @@ public class TextViewTwoLine extends View {
                 titleTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_titleTextSize, spToPx(14f));
                 descriptionTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_descriptionTextSize, spToPx(14f));
 
-                textTitleColor = a.getColor(R.styleable.TextViewTwoLine_titleColor, textTitleColor);
-                descriptionColor = a.getColor(R.styleable.TextViewTwoLine_descriptionColor, descriptionColor);
+                textTitleColor = a.getColor(R.styleable.TextViewTwoLine_textTitleColor, textTitleColor);
+                descriptionColor = a.getColor(R.styleable.TextViewTwoLine_textDescriptionColor, descriptionColor);
 
                 keepDescent = a.getBoolean(R.styleable.TextViewTwoLine_keepDescent, false);
             } finally {
