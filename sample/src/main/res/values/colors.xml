@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorDrawableTint">#737373</color>
+    <color name="colorDrawableTint">#2F3847</color>
     <color name="colorTestDrawableTint">#ff0059</color>
     <color name="colorTestTitle">#0073ff</color>
     <color name="colorTestDescription">#6600ff</color>

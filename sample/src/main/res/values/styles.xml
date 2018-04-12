@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
 
     </style>
@@ -17,8 +17,9 @@
         <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
         <item name="drawablePadding">@dimen/drawable_padding</item> <!-- 24dp for center -->
         <item name="drawableTintColor">@color/colorDrawableTint</item>
-        <item name="titleFontFamily">@font/vollkorn_semibold</item>
-        <item name="descriptionFontFamily">@font/vollkorn_regular</item>
+        <item name="titleFontFamily">@font/value_bold</item>
+        <item name="descriptionFontFamily">@font/value_regular</item>
+        <item name="textTitleColor">@color/colorDrawableTint</item>
         <item name="keepDescent">true</item>
     </style>
 

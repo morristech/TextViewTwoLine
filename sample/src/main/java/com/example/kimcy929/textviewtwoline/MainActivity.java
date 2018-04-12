@@ -26,11 +26,12 @@ public class MainActivity extends AppCompatActivity {
         btnChangeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textViewTwoLine.setTextTitle(getString(R.string.shutter_sound));
-                textViewTwoLine.setTextDescription(getString(R.string.shutter_sound_description));
-                textViewTwoLine.setLeftDrawable(R.drawable.ic_spa_black_24dp);
+//                textViewTwoLine.setTextTitle(getString(R.string.shutter_sound));
+                  textViewTwoLine.setTextDescription(getString(R.string.shutter_sound_description));
 
-                //textViewTwoLine.changeContent(getString(R.string.video_quality), getString(R.string.video_quality));
+//                textViewTwoLine.setLeftDrawable(R.drawable.ic_vibration_black_24dp);
+//
+//                textViewTwoLine.setText(null, "");
             }
         });
 
