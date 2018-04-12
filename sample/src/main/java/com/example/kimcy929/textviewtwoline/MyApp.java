@@ -18,7 +18,8 @@ public class MyApp extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
-        Locale locale = new Locale("ar");
+        //Locale locale = new Locale("ar"); RTL
+        Locale locale = new Locale("en"); //The default is LTR
 
         LocaleUtils.setLocale(locale);
     }
