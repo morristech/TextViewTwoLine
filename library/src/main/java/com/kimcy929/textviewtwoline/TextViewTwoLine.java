@@ -416,15 +416,13 @@ public class TextViewTwoLine extends View {
 
             if (widthMode == MeasureSpec.AT_MOST) {
                 if (desireWidth > widthRequirement) {
-
                     desireWidth = widthRequirement;
 
-                    int textLayoutWidth = desireWidth - keyLine - getPaddingEnd();
+                    /*int textLayoutWidth = desireWidth - keyLine - getPaddingEnd();
 
                     createTitleLayout(textLayoutWidth);
 
-                    createDescriptionLayout(textLayoutWidth);
-
+                    createDescriptionLayout(textLayoutWidth);*/
                 }
             } else if (widthMode == MeasureSpec.UNSPECIFIED) {
                 desireWidth = getDefaultSize(KEY_LINE_DEFAULT_SIZE, widthMeasureSpec);
