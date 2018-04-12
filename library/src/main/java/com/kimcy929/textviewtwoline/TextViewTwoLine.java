@@ -66,39 +66,32 @@ public class TextViewTwoLine extends View {
 
     private int paragraphLeading;
 
-    //https://gist.github.com/jemshit/0e755f9a5669fe78d0e2
     private int textTitleColor;
     private int descriptionColor;
 
     private int titleTextAppearId;
     private int descriptionTextAppearId;
 
-    Typeface titleTypeFace;
-    Typeface descriptionTypeFace;
+    private Typeface titleTypeFace;
+    private Typeface descriptionTypeFace;
 
-    private boolean keepDescent;
+    private boolean keepDefaultLineSpacing;
 
     private static final String TEXT_VIEW_TWO_LINE_EXTRA = "TEXT_VIEW_TWO_LINE_EXTRA";
-    private static final String TEXT_TITLE_EXTRA = "TEXT_TITLE_EXTRA";
-    private static final String TEXT_DESCRIPTION_EXTRA = "TEXT_DESCRIPTION_EXTRA";
-    private static final String LEFT_DRAWABLE_ID_EXTRA = "LEFT_DRAWABLE_ID_EXTRA";
-
-    /*private Paint linePaint;
-    private float lineHeight;
-    private boolean isDrawLine = false;*/
+    private static final String TEXT_TITLE_EXTRA         = "TEXT_TITLE_EXTRA";
+    private static final String TEXT_DESCRIPTION_EXTRA   = "TEXT_DESCRIPTION_EXTRA";
+    private static final String LEFT_DRAWABLE_ID_EXTRA   = "LEFT_DRAWABLE_ID_EXTRA";
 
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
         updateContentBounds();
         requestLayout(); // recall onMeasure
-        //invalidate(); // call onDraw
     }
 
     public void setTextDescription(String textDescription) {
         this.textDescription = textDescription;
         updateContentBounds();
         requestLayout(); // recall onMeasure
-        //invalidate(); // call onDraw
     }
 
     public void setLeftDrawable(@DrawableRes int leftDrawableId) {
@@ -106,26 +99,13 @@ public class TextViewTwoLine extends View {
         leftDrawable = AppCompatResources.getDrawable(getContext(), leftDrawableId);
         updateContentBounds();
         requestLayout(); // recall onMeasure
-        //invalidate(); // call onDraw
     }
 
-    public void changeContent(String newTextTitle, String newTextDes) {
-        boolean isChangedContent = false;
-
-        if (!TextUtils.equals(textTitle, newTextTitle)) {
-            textTitle = newTextTitle;
-            isChangedContent = true;
-        }
-
-        if (!TextUtils.equals(textDescription, newTextDes)) {
-            textDescription = newTextDes;
-            isChangedContent = true;
-        }
-
-        if (isChangedContent) {
-            requestLayout(); // recall onMeasure
-            //invalidate(); // call onDraw
-        }
+    public void setText(@Nullable String textTitle, @Nullable String textDescription) {
+        this.textTitle = textTitle;
+        this.textDescription = textDescription;
+        updateContentBounds();
+        requestLayout(); // recall onMeasure
     }
 
     // use this constructor if creating MyView programmatically
@@ -160,7 +140,7 @@ public class TextViewTwoLine extends View {
     }
 
     @ColorInt
-    private int resolveColorAttr(@AttrRes int colorAttr) throws Resources.NotFoundException{
+    private int resolveColorAttr(@AttrRes int colorAttr) throws Resources.NotFoundException {
         TypedValue resolvedAttr = resolveThemeAttr(colorAttr);
         // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
         int colorRes = resolvedAttr.resourceId != 0 ? resolvedAttr.resourceId : resolvedAttr.data;
@@ -221,7 +201,7 @@ public class TextViewTwoLine extends View {
                     if (titleTextStyle != 0) {
                         titleTypeFace = Typeface.create(titleTypeFace, titleTextStyle);
                     }
-                } else if (titleTextStyle != 0){
+                } else if (titleTextStyle != 0) {
                     titleTypeFace = Typeface.defaultFromStyle(titleTextStyle);
                 }
 
@@ -236,10 +216,10 @@ public class TextViewTwoLine extends View {
 
                 descriptionTextStyle = a.getInt(R.styleable.TextViewTwoLine_TextViewTwoLineDescriptionTextStyle, 0); //regular
                 if (descriptionTypeFace != null) {
-                   if (descriptionTextStyle != 0) {
-                       descriptionTypeFace = Typeface.create(descriptionTypeFace, descriptionTextStyle);
-                   }
-                } else if (descriptionTextStyle != 0){
+                    if (descriptionTextStyle != 0) {
+                        descriptionTypeFace = Typeface.create(descriptionTypeFace, descriptionTextStyle);
+                    }
+                } else if (descriptionTextStyle != 0) {
                     descriptionTypeFace = Typeface.defaultFromStyle(descriptionTextStyle);
                 }
 
@@ -252,7 +232,7 @@ public class TextViewTwoLine extends View {
                 textTitleColor = a.getColor(R.styleable.TextViewTwoLine_textTitleColor, textTitleColor);
                 descriptionColor = a.getColor(R.styleable.TextViewTwoLine_textDescriptionColor, descriptionColor);
 
-                keepDescent = a.getBoolean(R.styleable.TextViewTwoLine_keepDescent, false);
+                keepDefaultLineSpacing = a.getBoolean(R.styleable.TextViewTwoLine_keepDefaultLineSpacing, false);
             } finally {
                 if (a != null) {
                     a.recycle();
@@ -264,9 +244,6 @@ public class TextViewTwoLine extends View {
         titleTextPaint = new TextPaint();
         titleTextPaint.setAntiAlias(true);
         titleTextPaint.setTextSize(titleTextSize);
-        /*if (titleTypeFace != null) {
-            titleTextPaint.setTypeface(titleTypeFace);
-        }*/
         titleTextPaint.setTextLocale(Locale.getDefault());
 
         // default to a single line of text
@@ -275,13 +252,11 @@ public class TextViewTwoLine extends View {
             createTitleLayout(width);
         }
 
+
         // init for description
         desTextPaint = new TextPaint();
         desTextPaint.setAntiAlias(true);
         desTextPaint.setTextSize(descriptionTextSize);
-        /*if (descriptionTypeFace != null) {
-            desTextPaint.setTypeface(descriptionTypeFace);
-        }*/
         desTextPaint.setTextLocale(Locale.getDefault());
 
         // default to a single line of text
@@ -289,13 +264,6 @@ public class TextViewTwoLine extends View {
             int width = (int) desTextPaint.measureText(textDescription);
             createDescriptionLayout(width);
         }
-
-
-        /*linePaint = new Paint();
-        linePaint.setColor(Color.BLUE);
-        linePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        lineHeight = 1f;
-        linePaint.setStrokeWidth(lineHeight);*/
     }
 
     @NonNull
@@ -308,82 +276,76 @@ public class TextViewTwoLine extends View {
     }
 
     private void createTitleLayout(int width) {
-        if (!TextUtils.isEmpty(textTitle)) {
+        SpannableStringBuilder stringBuilder;
 
-            SpannableStringBuilder stringBuilder;
+        if (titleTextAppearId != -1) {
+            stringBuilder = getSpannableStringBuilder(textTitle, titleTextAppearId);
+        } else {
+            stringBuilder = new SpannableStringBuilder(textTitle);
+        }
 
-            if (titleTextAppearId != -1) {
-                stringBuilder = getSpannableStringBuilder(textTitle, titleTextAppearId);
-            } else {
-                stringBuilder = new SpannableStringBuilder(textTitle);
+        if (textTitleColor != -1) {
+            stringBuilder.setSpan(new ForegroundColorSpan(textTitleColor), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        if (titleTypeFace != null) {
+            stringBuilder.setSpan(new CustomTypefaceSpan(titleTypeFace), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+            TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                textDirection = TextDirectionHeuristics.RTL;
             }
 
-            if (textTitleColor != -1) {
-                stringBuilder.setSpan(new ForegroundColorSpan(textTitleColor), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-            if (titleTypeFace != null) {
-                stringBuilder.setSpan(new CustomTypefaceSpan(titleTypeFace), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-
-                TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
-                if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                    textDirection = TextDirectionHeuristics.RTL;
-                }
-
-                titleLayout = StaticLayout.Builder.obtain(stringBuilder, 0, stringBuilder.length(), titleTextPaint, width)
-                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-                        .setTextDirection(textDirection)
-                        .setLineSpacing(0, 1.0f) // multiplier, add
-                        .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)
-                        .setIncludePad(false)
-                        .build();
-            } else {
-                Layout.Alignment layoutAlign = getAlignment();
-                titleLayout = new StaticLayout(stringBuilder, titleTextPaint, width, layoutAlign, 1.0f, 0, false);
-            }
+            titleLayout = StaticLayout.Builder.obtain(stringBuilder, 0, stringBuilder.length(), titleTextPaint, width)
+                    .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                    .setTextDirection(textDirection)
+                    .setLineSpacing(0, 1.0f) // multiplier, add
+                    .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)
+                    .setIncludePad(false)
+                    .build();
+        } else {
+            Layout.Alignment layoutAlign = getAlignment();
+            titleLayout = new StaticLayout(stringBuilder, titleTextPaint, width, layoutAlign, 1.0f, 0, false);
         }
     }
 
     private void createDescriptionLayout(int width) {
-        if (!TextUtils.isEmpty(textDescription)) {
+        SpannableStringBuilder stringBuilder;
 
-            SpannableStringBuilder stringBuilder;
+        if (descriptionTextAppearId != -1) {
+            stringBuilder = getSpannableStringBuilder(textDescription, descriptionTextAppearId);
+        } else {
+            stringBuilder = new SpannableStringBuilder(textDescription);
+        }
 
-            if (descriptionTextAppearId != -1) {
-                stringBuilder = getSpannableStringBuilder(textDescription, descriptionTextAppearId);
-            } else {
-                stringBuilder = new SpannableStringBuilder(textDescription);
+        if (descriptionColor != -1) {
+            stringBuilder.setSpan(new ForegroundColorSpan(descriptionColor), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        if (descriptionTypeFace != null) {
+            stringBuilder.setSpan(new CustomTypefaceSpan(descriptionTypeFace), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                textDirection = TextDirectionHeuristics.RTL;
             }
 
-            if (descriptionColor != -1) {
-                stringBuilder.setSpan(new ForegroundColorSpan(descriptionColor), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
+            desLayout = StaticLayout.Builder.obtain(stringBuilder, 0, stringBuilder.length(), desTextPaint, width)
+                    .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                    .setTextDirection(textDirection)
+                    .setLineSpacing(0, 1.0f) // multiplier,
+                    .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)
+                    .setIncludePad(false)
+                    .build();
 
-            if (descriptionTypeFace != null) {
-                stringBuilder.setSpan(new CustomTypefaceSpan(descriptionTypeFace), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
-                if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                    textDirection = TextDirectionHeuristics.RTL;
-                }
-
-                desLayout = StaticLayout.Builder.obtain(stringBuilder, 0, stringBuilder.length(), desTextPaint, width)
-                        .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-                        .setTextDirection(textDirection)
-                        .setLineSpacing(0, 1.0f) // multiplier,
-                        .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)
-                        .setIncludePad(false)
-                        .build();
-
-            } else {
-                Layout.Alignment layoutAlign = getAlignment();
-                desLayout = new StaticLayout(stringBuilder, desTextPaint, width, layoutAlign, 1.0f, 0, false);
-            }
+        } else {
+            Layout.Alignment layoutAlign = getAlignment();
+            desLayout = new StaticLayout(stringBuilder, desTextPaint, width, layoutAlign, 1.0f, 0, false);
         }
     }
 
@@ -456,10 +418,6 @@ public class TextViewTwoLine extends View {
             }
         }
 
-        /*if (desireWidth < keyLine) {
-            desireWidth = keyLine;
-        }*/
-
         return desireWidth;
     }
 
@@ -487,7 +445,7 @@ public class TextViewTwoLine extends View {
             if (desLayout != null) {
                 descriptionTextHeight = desLayout.getHeight();
                 if (titleLayout != null) {
-                    paragraphLeading = (int) (titleTextPaint.getFontMetrics().bottom * (keepDescent ? 1.0f : 1.2f));
+                    paragraphLeading = (int) (titleTextPaint.getFontMetrics().bottom * (keepDefaultLineSpacing ? 1.0f : 1.2f));
                     totalTextHeight += descriptionTextHeight + paragraphLeading;
                 } else {
                     totalTextHeight += descriptionTextHeight;
@@ -531,12 +489,15 @@ public class TextViewTwoLine extends View {
 
         if (!TextUtils.isEmpty(textTitle)) {
             createTitleLayout(textWidth);
+        } else {
+            titleLayout = null;
         }
 
         if (!TextUtils.isEmpty(textDescription)) {
             createDescriptionLayout(textWidth);
+        } else {
+            desLayout = null;
         }
-
 
         int titleLayoutWidth = 0;
         int titleLayoutHeight = 0;
@@ -602,11 +563,6 @@ public class TextViewTwoLine extends View {
             desLayout.draw(canvas);
             canvas.restore();
         }
-
-        /*if (isDrawLine) {
-            float lineY = (getHeight() - lineHeight) / 2;
-            canvas.drawLine(0, lineY, getResources().getDisplayMetrics().widthPixels, lineY, linePaint);
-        }*/
     }
 
     //https://stackoverflow.com/a/8127813
