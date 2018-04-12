@@ -268,11 +268,7 @@ public class TextViewTwoLine extends View {
 
     @NonNull
     private Layout.Alignment getAlignment() {
-        Layout.Alignment layoutAlign = Layout.Alignment.ALIGN_NORMAL;
-        if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-            layoutAlign = Layout.Alignment.ALIGN_OPPOSITE;
-        }
-        return layoutAlign;
+        return Layout.Alignment.ALIGN_NORMAL;
     }
 
     private void createTitleLayout(int width) {
@@ -293,7 +289,6 @@ public class TextViewTwoLine extends View {
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-
             TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
             if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
                 textDirection = TextDirectionHeuristics.RTL;
@@ -307,8 +302,7 @@ public class TextViewTwoLine extends View {
                     .setIncludePad(false)
                     .build();
         } else {
-            Layout.Alignment layoutAlign = getAlignment();
-            titleLayout = new StaticLayout(stringBuilder, titleTextPaint, width, layoutAlign, 1.0f, 0, false);
+            titleLayout = new StaticLayout(stringBuilder, titleTextPaint, width, getAlignment(), 1.0f, 0, false);
         }
     }
 
@@ -344,8 +338,7 @@ public class TextViewTwoLine extends View {
                     .build();
 
         } else {
-            Layout.Alignment layoutAlign = getAlignment();
-            desLayout = new StaticLayout(stringBuilder, desTextPaint, width, layoutAlign, 1.0f, 0, false);
+            desLayout = new StaticLayout(stringBuilder, desTextPaint, width, getAlignment(), 1.0f, 0, false);
         }
     }
 
