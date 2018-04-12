@@ -11,11 +11,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.content.res.AppCompatResources;
@@ -64,8 +67,8 @@ public class TextViewTwoLine extends View {
     private int paragraphLeading;
 
     //https://gist.github.com/jemshit/0e755f9a5669fe78d0e2
-    private int textTitleColor = 0xDE000000; //DE for %87 opacity
-    private int descriptionColor = 0x8A000000; //!--8A for %54 opacity
+    private int textTitleColor;
+    private int descriptionColor;
 
     private int titleTextAppearId;
     private int descriptionTextAppearId;
@@ -148,9 +151,39 @@ public class TextViewTwoLine extends View {
         initTwoTextView(context, attrs, defStyleAttr);
     }
 
+    //https://stackoverflow.com/a/46477727
+    private TypedValue resolveThemeAttr(@AttrRes int attrRes) {
+        Resources.Theme theme = getContext().getTheme();
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attrRes, typedValue, true);
+        return typedValue;
+    }
+
+    @ColorInt
+    private int resolveColorAttr(@AttrRes int colorAttr) throws Resources.NotFoundException{
+        TypedValue resolvedAttr = resolveThemeAttr(colorAttr);
+        // resourceId is used if it's a ColorStateList, and data if it's a color reference or a hex color
+        int colorRes = resolvedAttr.resourceId != 0 ? resolvedAttr.resourceId : resolvedAttr.data;
+        return ContextCompat.getColor(getContext(), colorRes);
+    }
+
     @SuppressWarnings("unused")
     @SuppressLint("LogNotTimber")
     private void initTwoTextView(Context context, AttributeSet attributeSet, int defStyleAttr) {
+
+        try {
+            textTitleColor = resolveColorAttr(android.R.attr.textColorPrimary);
+        } catch (Resources.NotFoundException e) {
+            textTitleColor = 0xDE000000;
+            Log.e(TAG, "Error get textColorPrimary " + e.getMessage());
+        }
+
+        try {
+            descriptionColor = resolveColorAttr(android.R.attr.textColorSecondary);
+        } catch (Resources.NotFoundException e) {
+            descriptionColor = 0x8A000000;
+            Log.e(TAG, "Error get textColorSecondary " + e.getMessage());
+        }
 
         int titleTextSize = spToPx(14f);
         int descriptionTextSize = spToPx(14f);
@@ -417,12 +450,6 @@ public class TextViewTwoLine extends View {
             if (widthMode == MeasureSpec.AT_MOST) {
                 if (desireWidth > widthRequirement) {
                     desireWidth = widthRequirement;
-
-                    /*int textLayoutWidth = desireWidth - keyLine - getPaddingEnd();
-
-                    createTitleLayout(textLayoutWidth);
-
-                    createDescriptionLayout(textLayoutWidth);*/
                 }
             } else if (widthMode == MeasureSpec.UNSPECIFIED) {
                 desireWidth = getDefaultSize(KEY_LINE_DEFAULT_SIZE, widthMeasureSpec);

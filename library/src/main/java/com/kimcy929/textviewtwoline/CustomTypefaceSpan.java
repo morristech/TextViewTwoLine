@@ -10,7 +10,6 @@ import android.text.style.MetricAffectingSpan;
 @SuppressWarnings("WeakerAccess")
 public class CustomTypefaceSpan extends MetricAffectingSpan {
 
-
     private final Typeface typeface;
 
     public CustomTypefaceSpan(Typeface typeface) {
