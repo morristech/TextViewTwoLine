@@ -1,0 +1,42 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="TextViewTwoTextLineTextTitleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingStart">@dimen/drawable_padding</item> <!-- 24dp for center -->
+        <item name="android:paddingEnd">?attr/listPreferredItemPaddingRight</item>
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="drawablePadding">@dimen/drawable_padding</item> <!-- 24dp for center -->
+        <item name="drawableTintColor">@color/colorDrawableTint</item>
+        <item name="titleFontFamily">@font/vollkorn_semibold</item>
+        <item name="descriptionFontFamily">@font/vollkorn_regular</item>
+        <item name="keepDescent">true</item>
+    </style>
+
+    <style name="SwitchCompatStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginEnd">?attr/listPreferredItemPaddingRight</item>
+    </style>
+
+    <style name="SettingsItemStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:minHeight">?attr/listPreferredItemHeightLarge</item>
+        <item name="android:paddingBottom">@dimen/item_padding</item>
+        <item name="android:paddingTop">@dimen/item_padding</item>
+    </style>
+
+</resources>

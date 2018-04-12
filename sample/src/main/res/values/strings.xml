@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">TextViewTwoLine</string>
+
+    <string name="fix_for_nexus">Fix for Nexus device</string>
+    <string name="fix_for_nexus_description">Some Nexus devices run Android Marshmallow error upside down video after record. You can enable this function to try to fix error</string>
+
+    <string name="support_translate">Translation</string>
+    <string name="support_translate_description">Would you like to translate this app to your own language or fix mistakes in translation? Tap here to email us to request translation document</string>
+
+    <string name="shutter_sound">Shutter sound</string>
+    <string name="shutter_sound_description">Enable shutter sound when start and stop recording</string>
+
+</resources>

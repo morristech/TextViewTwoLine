@@ -1,0 +1,14 @@
+﻿<resources>
+
+    <string name="app_name">مسجل الفيديو الخفي</string>
+
+    <string name="support_translate">الترجمة</string>
+    <string name="support_translate_description">هل ترغب في ترجمة هذا التطبيق إلى لغتك الخاصة أو إصلاح الأخطاء في الترجمة؟ اضغط هنا لمراسلتنا عبر البريد الإلكتروني لطلب ترجمة الوثائق</string>
+
+    <string name="fix_for_nexus">أصلاح لأجهزة نكسوس</string>
+    <string name="fix_for_nexus_description">بعض أجهزة نيكزس التي تعمل بنظام التشغيل مارشميلو  يتم تسجيل الفيديو رأسا على عقب . يمكنك تمكين هذه الوظيفة في محاولة لتصحيح الخطأ</string>
+
+    <string name="shutter_sound">صوت الغالق للكاميرا</string>
+    <string name="shutter_sound_description">تمكين صوت الغالق عند بدء وإيقاف التسجيل</string>
+
+</resources>
