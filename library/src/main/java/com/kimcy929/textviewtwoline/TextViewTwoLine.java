@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
@@ -45,8 +46,8 @@ public class TextViewTwoLine extends View {
 
     private static final String TAG = TextViewTwoLine.class.getSimpleName();
 
-    private String textTitle;
-    private String textDescription;
+    private CharSequence textTitle;
+    private CharSequence textDescription;
 
     private TextPaint titleTextPaint;
     private StaticLayout titleLayout;
@@ -78,9 +79,9 @@ public class TextViewTwoLine extends View {
     private boolean keepDefaultLineSpacing;
 
     private static final String TEXT_VIEW_TWO_LINE_EXTRA = "TEXT_VIEW_TWO_LINE_EXTRA";
-    private static final String TEXT_TITLE_EXTRA         = "TEXT_TITLE_EXTRA";
-    private static final String TEXT_DESCRIPTION_EXTRA   = "TEXT_DESCRIPTION_EXTRA";
-    private static final String LEFT_DRAWABLE_ID_EXTRA   = "LEFT_DRAWABLE_ID_EXTRA";
+    private static final String TEXT_TITLE_EXTRA = "TEXT_TITLE_EXTRA";
+    private static final String TEXT_DESCRIPTION_EXTRA = "TEXT_DESCRIPTION_EXTRA";
+    private static final String LEFT_DRAWABLE_ID_EXTRA = "LEFT_DRAWABLE_ID_EXTRA";
 
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
@@ -248,7 +249,7 @@ public class TextViewTwoLine extends View {
 
         // default to a single line of text
         if (!TextUtils.isEmpty(textTitle)) {
-            int width = (int) titleTextPaint.measureText(textTitle);
+            int width = (int) titleTextPaint.measureText(textTitle.toString());
             createTitleLayout(width);
         }
 
@@ -261,7 +262,7 @@ public class TextViewTwoLine extends View {
 
         // default to a single line of text
         if (!TextUtils.isEmpty(textDescription)) {
-            int width = (int) desTextPaint.measureText(textDescription);
+            int width = (int) desTextPaint.measureText(textDescription.toString());
             createDescriptionLayout(width);
         }
     }
@@ -275,7 +276,7 @@ public class TextViewTwoLine extends View {
         SpannableStringBuilder stringBuilder;
 
         if (titleTextAppearId != -1) {
-            stringBuilder = getSpannableStringBuilder(textTitle, titleTextAppearId);
+            stringBuilder = getSpannableStringBuilder(textTitle.toString(), titleTextAppearId);
         } else {
             stringBuilder = new SpannableStringBuilder(textTitle);
         }
@@ -310,7 +311,7 @@ public class TextViewTwoLine extends View {
         SpannableStringBuilder stringBuilder;
 
         if (descriptionTextAppearId != -1) {
-            stringBuilder = getSpannableStringBuilder(textDescription, descriptionTextAppearId);
+            stringBuilder = getSpannableStringBuilder(textDescription.toString(), descriptionTextAppearId);
         } else {
             stringBuilder = new SpannableStringBuilder(textDescription);
         }
@@ -558,33 +559,101 @@ public class TextViewTwoLine extends View {
         }
     }
 
-    //https://stackoverflow.com/a/8127813
+    // https://stackoverflow.com/questions/3542333/how-to-prevent-custom-views-from-losing-state-across-screen-orientation-changes
+    // https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/widget/TextView.java#L5001
 
     @Override
     public Parcelable onSaveInstanceState() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(TEXT_VIEW_TWO_LINE_EXTRA, super.onSaveInstanceState());
-        bundle.putString(TEXT_TITLE_EXTRA, textTitle);
-        bundle.putString(TEXT_DESCRIPTION_EXTRA, textDescription);
-        bundle.putInt(LEFT_DRAWABLE_ID_EXTRA, leftDrawableId);
-        return bundle;
+        Parcelable superSate = super.onSaveInstanceState();
+
+        if (!TextUtils.isEmpty(textTitle) || !TextUtils.isEmpty(textDescription) || leftDrawableId != -1) {
+
+            SavedState ss = new SavedState(superSate);
+
+            if (!TextUtils.isEmpty(textTitle)) {
+                ss.textTitle = textTitle;
+            }
+
+            if (!TextUtils.isEmpty(textDescription)) {
+                ss.textDescription = textDescription;
+            }
+
+            if (leftDrawableId != -1) {
+                ss.leftDrawableId = leftDrawableId;
+            }
+
+            return ss;
+        }
+
+        return superSate;
     }
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        if (state instanceof Bundle) {
-            Bundle bundle = (Bundle) state;
-            textTitle = bundle.getString(TEXT_TITLE_EXTRA, null);
-            textDescription = bundle.getString(TEXT_DESCRIPTION_EXTRA, null);
-            leftDrawableId = bundle.getInt(LEFT_DRAWABLE_ID_EXTRA, -1);
-            if (leftDrawableId != -1) {
-                leftDrawable = AppCompatResources.getDrawable(getContext(), leftDrawableId);
-            }
-            state = bundle.getParcelable(TEXT_VIEW_TWO_LINE_EXTRA);
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
         }
-        super.onRestoreInstanceState(state);
+
+        SavedState ss = (SavedState) state;
+
+        super.onRestoreInstanceState(ss.getSuperState());
+
+        if (!TextUtils.isEmpty(ss.textTitle)) {
+            textTitle = ss.textTitle;
+        }
+
+        if (!TextUtils.isEmpty(ss.textDescription)) {
+            textDescription = ss.textDescription;
+        }
+
+        if (ss.leftDrawableId != -1) {
+            leftDrawableId = ss.leftDrawableId;
+        }
     }
 
+    public static class SavedState extends View.BaseSavedState {
+
+        CharSequence textTitle = null;
+        CharSequence textDescription = null;
+        int leftDrawableId = -1;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+
+            TextUtils.writeToParcel(textTitle, out, flags);
+
+            TextUtils.writeToParcel(textDescription, out, flags);
+
+            out.writeInt(leftDrawableId);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+
+        private SavedState(Parcel in) {
+            super(in);
+
+            textTitle = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+
+            textDescription = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+
+            leftDrawableId = in.readInt();
+        }
+    }
 
     private int dpToPx(final float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
