@@ -9,7 +9,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.AttrRes;
@@ -78,11 +77,6 @@ public class TextViewTwoLine extends View {
 
     private boolean keepDefaultLineSpacing;
 
-    private static final String TEXT_VIEW_TWO_LINE_EXTRA = "TEXT_VIEW_TWO_LINE_EXTRA";
-    private static final String TEXT_TITLE_EXTRA = "TEXT_TITLE_EXTRA";
-    private static final String TEXT_DESCRIPTION_EXTRA = "TEXT_DESCRIPTION_EXTRA";
-    private static final String LEFT_DRAWABLE_ID_EXTRA = "LEFT_DRAWABLE_ID_EXTRA";
-
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
         updateContentBounds();
@@ -102,6 +96,7 @@ public class TextViewTwoLine extends View {
         requestLayout(); // recall onMeasure
     }
 
+    @SuppressWarnings("unused")
     public void setText(@Nullable String textTitle, @Nullable String textDescription) {
         this.textTitle = textTitle;
         this.textDescription = textDescription;
@@ -609,6 +604,7 @@ public class TextViewTwoLine extends View {
 
         if (ss.leftDrawableId != -1) {
             leftDrawableId = ss.leftDrawableId;
+            leftDrawable = AppCompatResources.getDrawable(getContext(), leftDrawableId);
         }
     }
 
