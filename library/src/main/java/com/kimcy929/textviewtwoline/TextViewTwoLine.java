@@ -37,7 +37,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.example.settings_template_layout.R;
 
 import java.util.Locale;
 
