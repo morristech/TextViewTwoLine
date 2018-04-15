@@ -60,10 +60,6 @@ public class TextViewTwoLine extends View {
     private int drawableTintColor = -1;
     private int drawablePadding = 0;
 
-    private final int DRAWABLE_DEFAULT_SIZE = dpToPx(24f);
-
-    private final int KEY_LINE_DEFAULT_SIZE = dpToPx(72f);
-
     private int paragraphLeading;
 
     private int textTitleColor;
@@ -368,6 +364,8 @@ public class TextViewTwoLine extends View {
 
         int desireWidth = 0;
 
+        desireWidth += getMinimumWidth();
+
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthRequirement = MeasureSpec.getSize(widthMeasureSpec);
 
@@ -403,7 +401,7 @@ public class TextViewTwoLine extends View {
                     desireWidth = widthRequirement;
                 }
             } else if (widthMode == MeasureSpec.UNSPECIFIED) {
-                desireWidth = getDefaultSize(KEY_LINE_DEFAULT_SIZE, widthMeasureSpec);
+                desireWidth = getDefaultSize(desireWidth, widthMeasureSpec);
             }
         }
 
@@ -411,10 +409,9 @@ public class TextViewTwoLine extends View {
     }
 
     private int getDesireHeight(int heightMeasureSpec) {
-
         int desireHeight = 0;
 
-        desireHeight += getPaddingEnd() + getPaddingBottom();
+        desireHeight += getMinimumHeight() + getPaddingTop() + getPaddingBottom();
 
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightRequirement = MeasureSpec.getSize(heightMeasureSpec);
@@ -422,13 +419,11 @@ public class TextViewTwoLine extends View {
         if (heightMode == MeasureSpec.EXACTLY) {
             desireHeight += heightRequirement;
         } else {
-            int titleTextHeight;
             int descriptionTextHeight;
             int totalTextHeight = 0;
 
             if (titleLayout != null) {
-                titleTextHeight = titleLayout.getHeight();
-                totalTextHeight += titleTextHeight;
+                totalTextHeight += titleLayout.getHeight();
             }
 
             if (desLayout != null) {
@@ -449,8 +444,8 @@ public class TextViewTwoLine extends View {
 
             if (heightMode == MeasureSpec.AT_MOST) {
                 desireHeight = Math.min(desireHeight, heightRequirement);
-            } else if (heightMode == MeasureSpec.UNSPECIFIED) {
-                desireHeight = getDefaultSize(DRAWABLE_DEFAULT_SIZE, heightMeasureSpec);
+            } else if (heightMode == MeasureSpec.UNSPECIFIED) { // for scrollview
+                desireHeight = getDefaultSize(desireHeight, heightMeasureSpec);
             }
         }
 
@@ -476,13 +471,13 @@ public class TextViewTwoLine extends View {
         int textWidth = getMeasuredWidth() - getPaddingStart()
                 - drawableSize - drawablePadding - getPaddingEnd(); // keyLine = paddingStart + drawableSize + drawablePadding = 16dp + 24dp + 32dp even view hasn't a drawable
 
-        if (!TextUtils.isEmpty(textTitle)) {
+        if (!TextUtils.isEmpty(textTitle) && textWidth >  0) {
             createTitleLayout(textWidth);
         } else {
             titleLayout = null;
         }
 
-        if (!TextUtils.isEmpty(textDescription)) {
+        if (!TextUtils.isEmpty(textDescription) && textWidth >  0) {
             createDescriptionLayout(textWidth);
         } else {
             desLayout = null;
@@ -500,9 +495,7 @@ public class TextViewTwoLine extends View {
 
         if (titleLayout != null) {
             if (desLayout != null) {
-                yStartTitle = (getMeasuredHeight() - getPaddingBottom()
-                        - desLayout.getHeight() - paragraphLeading
-                        - titleLayoutHeight - getPaddingTop()) / 2;
+                yStartTitle = (getMeasuredHeight() - desLayout.getHeight() - paragraphLeading - titleLayoutHeight) / 2;
             } else {
                 yStartTitle = (getMeasuredHeight() - titleLayoutHeight) / 2;
             }
@@ -651,9 +644,9 @@ public class TextViewTwoLine extends View {
         }
     }
 
-    private int dpToPx(final float dp) {
+    /*private int dpToPx(final float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
-    }
+    }*/
 
     public int spToPx(float sp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, getContext().getResources().getDisplayMetrics());
