@@ -1,76 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:orientation="vertical">
+    android:layout_height="match_parent">-->
 
-    <RelativeLayout
-        android:id="@+id/btnHideVideo"
-        style="@style/SettingsItemStyle">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <com.kimcy929.textviewtwoline.TextViewTwoLine
-            android:id="@+id/textViewTwoLine"
-            style="@style/TextViewTwoTextLineTextTitleStyle"
-            android:layout_toStartOf="@+id/switchCompat"
-            app:appCompatLeftDrawable="@drawable/ic_smartphone_black_24dp"
-            app:textTitle="@string/fix_for_nexus"
-            app:textDescription="@string/fix_for_nexus_description"/>
+        <RelativeLayout
+            android:id="@+id/btnHideVideo"
+            style="@style/SettingsItemStyle">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switchCompat"
-            style="@style/SwitchCompatStyle" />
+            <com.kimcy929.textviewtwoline.TextViewTwoLine
+                android:id="@+id/textViewTwoLine"
+                style="@style/TextViewTwoTextLineTextTitleStyle"
+                android:layout_toStartOf="@+id/switchCompat" />
 
-    </RelativeLayout>
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchCompat"
+                style="@style/SwitchCompatStyle" />
 
-    <RelativeLayout
-        android:id="@+id/btnTranslate"
-        style="@style/SettingsItemStyle">
+        </RelativeLayout>
 
-        <com.kimcy929.textviewtwoline.TextViewTwoLine
-            android:id="@+id/textViewTwoLine1"
-            style="@style/TextViewTwoTextLineTextTitleStyle"
-            android:layout_toStartOf="@+id/switchCompat1"
-            app:appCompatLeftDrawable="@drawable/ic_g_translate_black_24dp"
-            app:textTitle="@string/support_translate"
-            app:textDescription="@string/support_translate_description"/>
+        <RelativeLayout
+            android:id="@+id/btnTranslate"
+            style="@style/SettingsItemStyle">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switchCompat1"
-            style="@style/SwitchCompatStyle" />
+            <com.kimcy929.textviewtwoline.TextViewTwoLine
+                style="@style/TextViewTwoTextLineTextTitleStyle"
+                android:layout_toStartOf="@+id/switchCompat1"
+                app:leftDrawableCompat="@drawable/ic_g_translate_black_24dp"
+                app:textDescription="@string/support_translate_description"
+                app:textTitle="@string/support_translate" />
 
-    </RelativeLayout>
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchCompat1"
+                style="@style/SwitchCompatStyle" />
 
-    <RelativeLayout
-        android:id="@+id/btnShutterSound"
-        style="@style/SettingsItemStyle">
+        </RelativeLayout>
 
         <com.kimcy929.textviewtwoline.TextViewTwoLine
             android:id="@+id/textViewTwoLine2"
             style="@style/TextViewTwoTextLineTextTitleStyle"
-            android:layout_toStartOf="@+id/switchCompat2"
-            app:textTitle="@string/shutter_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff0606"
+            android:minHeight="?attr/listPreferredItemHeightLarge"
+            app:leftDrawableCompat="@drawable/ic_volume_up_black_24dp"
             app:textDescription="@string/shutter_sound"
-            app:appCompatLeftDrawable="@drawable/ic_volume_up_black_24dp" />
+            app:textTitle="@string/shutter_sound" />
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switchCompat2"
-            style="@style/SwitchCompatStyle" />
+        <Button
+            android:id="@+id/btnChangeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/vollkorn_semibold"
+            android:text="Change Content"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:visibility="visible" />
 
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnChangeText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="32dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:fontFamily="@font/vollkorn_semibold"
-        android:textAllCaps="false"
-        android:text="Change Content"
-        android:visibility="visible" />
-
-</LinearLayout>
+    </LinearLayout>
+<!--</ScrollView>-->
