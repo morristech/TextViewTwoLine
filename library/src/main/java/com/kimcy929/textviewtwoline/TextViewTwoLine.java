@@ -37,7 +37,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
-
 import java.util.Locale;
 
 public class TextViewTwoLine extends View {
@@ -54,8 +53,8 @@ public class TextViewTwoLine extends View {
     private StaticLayout desLayout;
     private float yStartDes;
 
-    private Drawable leftDrawable;
-    private int leftDrawableId;
+    private Drawable leftDrawableCompat;
+    private int leftDrawableCompatId;
     private int drawableTintColor = -1;
     private int drawablePadding = 0;
 
@@ -84,9 +83,16 @@ public class TextViewTwoLine extends View {
         requestLayout(); // recall onMeasure
     }
 
-    public void setLeftDrawable(@DrawableRes int leftDrawableId) {
-        this.leftDrawableId = leftDrawableId;
-        leftDrawable = AppCompatResources.getDrawable(getContext(), leftDrawableId);
+    public void setTextDescription(Spanned textDescription) {
+        this.textDescription = textDescription;
+        updateContentBounds();
+        requestLayout(); // recall onMeasure
+    }
+
+    @SuppressWarnings("unused")
+    public void setLeftDrawableCompat(@DrawableRes int leftDrawableId) {
+        this.leftDrawableCompatId = leftDrawableId;
+        leftDrawableCompat = AppCompatResources.getDrawable(getContext(), leftDrawableId);
         updateContentBounds();
         requestLayout(); // recall onMeasure
     }
@@ -173,9 +179,9 @@ public class TextViewTwoLine extends View {
                 drawablePadding = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_drawablePadding, 0);
                 drawableTintColor = a.getColor(R.styleable.TextViewTwoLine_drawableTintColor, -1);
 
-                leftDrawableId = a.getResourceId(R.styleable.TextViewTwoLine_appCompatLeftDrawable, -1);
-                if (leftDrawableId != -1) {
-                    leftDrawable = AppCompatResources.getDrawable(context, leftDrawableId);
+                leftDrawableCompatId = a.getResourceId(R.styleable.TextViewTwoLine_leftDrawableCompat, -1);
+                if (leftDrawableCompatId != -1) {
+                    leftDrawableCompat = AppCompatResources.getDrawable(context, leftDrawableCompatId);
                 }
 
                 int fontId = a.getResourceId(R.styleable.TextViewTwoLine_titleFontFamily, -1);
@@ -217,8 +223,9 @@ public class TextViewTwoLine extends View {
                 titleTextAppearId = a.getResourceId(R.styleable.TextViewTwoLine_titleTextAppearance, -1);
                 descriptionTextAppearId = a.getResourceId(R.styleable.TextViewTwoLine_descriptionTextAppearance, -1);
 
-                titleTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_titleTextSize, spToPx(14f));
-                descriptionTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_descriptionTextSize, spToPx(14f));
+                int defaultTextSize = spToPx(14f);
+                titleTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_titleTextSize, defaultTextSize);
+                descriptionTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_descriptionTextSize, defaultTextSize);
 
                 textTitleColor = a.getColor(R.styleable.TextViewTwoLine_textTitleColor, textTitleColor);
                 descriptionColor = a.getColor(R.styleable.TextViewTwoLine_textDescriptionColor, descriptionColor);
@@ -279,7 +286,7 @@ public class TextViewTwoLine extends View {
             stringBuilder.setSpan(new CustomTypefaceSpan(titleTypeFace), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
             if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
                 textDirection = TextDirectionHeuristics.RTL;
@@ -314,7 +321,7 @@ public class TextViewTwoLine extends View {
             stringBuilder.setSpan(new CustomTypefaceSpan(descriptionTypeFace), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             TextDirectionHeuristic textDirection = TextDirectionHeuristics.LTR;
             if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
                 textDirection = TextDirectionHeuristics.RTL;
@@ -363,18 +370,17 @@ public class TextViewTwoLine extends View {
 
         int desireWidth = 0;
 
-        desireWidth += getMinimumWidth();
-
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthRequirement = MeasureSpec.getSize(widthMeasureSpec);
+
+        desireWidth += getMinimumWidth();
 
         if (widthMode == MeasureSpec.EXACTLY) {
             desireWidth = widthRequirement;
         } else {
-
             int drawableSize = 0;
-            if (leftDrawable != null) {
-                drawableSize = leftDrawable.getIntrinsicWidth();
+            if (leftDrawableCompat != null) {
+                drawableSize = leftDrawableCompat.getIntrinsicWidth();
             }
 
             int keyLine = getPaddingStart() + drawableSize + drawablePadding;
@@ -388,8 +394,8 @@ public class TextViewTwoLine extends View {
             } else if (desLayout != null) {
                 desireWidth += desLayout.getWidth();
             } else {
-                if (leftDrawable != null) {
-                    desireWidth = leftDrawable.getIntrinsicWidth();
+                if (leftDrawableCompat != null) {
+                    desireWidth = leftDrawableCompat.getIntrinsicWidth();
                 }
             }
 
@@ -410,13 +416,13 @@ public class TextViewTwoLine extends View {
     private int getDesireHeight(int heightMeasureSpec) {
         int desireHeight = 0;
 
-        desireHeight += getMinimumHeight() + getPaddingTop() + getPaddingBottom();
+        desireHeight += getPaddingTop() + getPaddingBottom();
 
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightRequirement = MeasureSpec.getSize(heightMeasureSpec);
 
         if (heightMode == MeasureSpec.EXACTLY) {
-            desireHeight += heightRequirement;
+            desireHeight = heightRequirement;
         } else {
             int descriptionTextHeight;
             int totalTextHeight = 0;
@@ -435,8 +441,8 @@ public class TextViewTwoLine extends View {
                 }
             }
 
-            if (leftDrawable != null) {
-                desireHeight += Math.max(leftDrawable.getIntrinsicHeight(), totalTextHeight);
+            if (leftDrawableCompat != null) {
+                desireHeight += Math.max(leftDrawableCompat.getIntrinsicHeight(), totalTextHeight);
             } else {
                 desireHeight = totalTextHeight;
             }
@@ -444,6 +450,7 @@ public class TextViewTwoLine extends View {
             if (heightMode == MeasureSpec.AT_MOST) {
                 desireHeight = Math.min(desireHeight, heightRequirement);
             } else if (heightMode == MeasureSpec.UNSPECIFIED) { // for scrollview
+                desireHeight = Math.max(desireHeight, getMinimumHeight());
                 desireHeight = getDefaultSize(desireHeight, heightMeasureSpec);
             }
         }
@@ -458,12 +465,12 @@ public class TextViewTwoLine extends View {
         int drawableSize = 0;
         int left = getPaddingStart();
 
-        if (leftDrawable != null) {
-            drawableSize = leftDrawable.getIntrinsicWidth();
+        if (leftDrawableCompat != null) {
+            drawableSize = leftDrawableCompat.getIntrinsicWidth();
             if (drawableTintColor != -1) {
-                leftDrawable.mutate().setColorFilter(drawableTintColor, PorterDuff.Mode.SRC_IN);
+                leftDrawableCompat.mutate().setColorFilter(drawableTintColor, PorterDuff.Mode.SRC_IN);
             } else {
-                leftDrawable.mutate().setColorFilter(null);
+                leftDrawableCompat.mutate().setColorFilter(null);
             }
         }
 
@@ -516,9 +523,9 @@ public class TextViewTwoLine extends View {
             xStartTitle = getMeasuredWidth() - xStartTitle - titleLayoutWidth;
         }
 
-        if (leftDrawable != null) {
+        if (leftDrawableCompat != null) {
             int top = (getMeasuredHeight() - drawableSize) / 2;
-            leftDrawable.setBounds(left, top, left + drawableSize, top + drawableSize);
+            leftDrawableCompat.setBounds(left, top, left + drawableSize, top + drawableSize);
         }
     }
 
@@ -527,8 +534,8 @@ public class TextViewTwoLine extends View {
         super.onDraw(canvas);
         // do as little as possible inside onDraw to improve performance
 
-        if (leftDrawable != null) {
-            leftDrawable.draw(canvas);
+        if (leftDrawableCompat != null) {
+            leftDrawableCompat.draw(canvas);
         }
 
         if (titleLayout != null) {
@@ -553,7 +560,7 @@ public class TextViewTwoLine extends View {
     public Parcelable onSaveInstanceState() {
         Parcelable superSate = super.onSaveInstanceState();
 
-        if (!TextUtils.isEmpty(textTitle) || !TextUtils.isEmpty(textDescription) || leftDrawableId != -1) {
+        if (!TextUtils.isEmpty(textTitle) || !TextUtils.isEmpty(textDescription) || leftDrawableCompatId != -1) {
 
             SavedState ss = new SavedState(superSate);
 
@@ -565,8 +572,8 @@ public class TextViewTwoLine extends View {
                 ss.textDescription = textDescription;
             }
 
-            if (leftDrawableId != -1) {
-                ss.leftDrawableId = leftDrawableId;
+            if (leftDrawableCompatId != -1) {
+                ss.leftDrawableId = leftDrawableCompatId;
             }
 
             return ss;
@@ -595,12 +602,12 @@ public class TextViewTwoLine extends View {
         }
 
         if (ss.leftDrawableId != -1) {
-            leftDrawableId = ss.leftDrawableId;
-            leftDrawable = AppCompatResources.getDrawable(getContext(), leftDrawableId);
+            leftDrawableCompatId = ss.leftDrawableId;
+            leftDrawableCompat = AppCompatResources.getDrawable(getContext(), leftDrawableCompatId);
         }
     }
 
-    public static class SavedState extends View.BaseSavedState {
+    public static class SavedState extends BaseSavedState {
 
         CharSequence textTitle = null;
         CharSequence textDescription = null;
@@ -621,8 +628,8 @@ public class TextViewTwoLine extends View {
             out.writeInt(leftDrawableId);
         }
 
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR =
+                new Creator<SavedState>() {
                     public SavedState createFromParcel(Parcel in) {
                         return new SavedState(in);
                     }

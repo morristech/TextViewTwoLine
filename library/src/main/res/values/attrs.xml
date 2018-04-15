@@ -5,7 +5,7 @@
         <attr name="textTitle" format="string" />
         <attr name="textDescription" format="string" />
 
-        <attr name="appCompatLeftDrawable" format="reference" />
+        <attr name="leftDrawableCompat" format="reference" />
         <attr name="drawablePadding" format="dimension" />
         <attr name="drawableTintColor" format="color" />
 
