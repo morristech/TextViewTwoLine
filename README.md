@@ -1,6 +1,22 @@
 # TextViewTwoLine
 
+Add to a module in project
+
+```gradle
+allprojects {
+   repositories {
+      ...
+      maven { url 'https://jitpack.io' }
+   }
+}
+   
+dependencies {
+   compile 'com.github.kimcy929:TextViewTwoLine:1.0'
+}
+```
 ## Make settings item is simpler
+
+Seeing the [sample][1] to setup
 
 ![alt text](https://github.com/kimcy929/TextViewTwoLine/blob/master/art/Screenshot_demo.png)
 
@@ -21,3 +37,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+[1]:https://github.com/kimcy929/TextViewTwoLine/blob/master/sample/src/main/res/layout/activity_two_line.xml
