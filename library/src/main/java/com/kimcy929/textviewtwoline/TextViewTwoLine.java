@@ -55,7 +55,7 @@ public class TextViewTwoLine extends View {
 
     private Drawable leftDrawableCompat;
     private int leftDrawableCompatId;
-    private int drawableTintColor = -1;
+    private int drawableTintColor = 0;
     private int drawablePadding = 0;
 
     private int paragraphLeading;
@@ -177,15 +177,15 @@ public class TextViewTwoLine extends View {
                 textTitle = a.getString(R.styleable.TextViewTwoLine_textTitle);
                 textDescription = a.getString(R.styleable.TextViewTwoLine_textDescription);
                 drawablePadding = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_drawablePadding, 0);
-                drawableTintColor = a.getColor(R.styleable.TextViewTwoLine_drawableTintColor, -1);
+                drawableTintColor = a.getColor(R.styleable.TextViewTwoLine_drawableTintColor, 0);
 
-                leftDrawableCompatId = a.getResourceId(R.styleable.TextViewTwoLine_leftDrawableCompat, -1);
-                if (leftDrawableCompatId != -1) {
+                leftDrawableCompatId = a.getResourceId(R.styleable.TextViewTwoLine_leftDrawableCompat, 0);
+                if (leftDrawableCompatId != 0) {
                     leftDrawableCompat = AppCompatResources.getDrawable(context, leftDrawableCompatId);
                 }
 
-                int fontId = a.getResourceId(R.styleable.TextViewTwoLine_titleFontFamily, -1);
-                if (fontId != -1) {
+                int fontId = a.getResourceId(R.styleable.TextViewTwoLine_titleFontFamily, 0);
+                if (fontId != 0) {
                     try {
                         titleTypeFace = ResourcesCompat.getFont(getContext(), fontId);
                     } catch (Resources.NotFoundException e) {
@@ -202,8 +202,8 @@ public class TextViewTwoLine extends View {
                     titleTypeFace = Typeface.defaultFromStyle(titleTextStyle);
                 }
 
-                fontId = a.getResourceId(R.styleable.TextViewTwoLine_descriptionFontFamily, -1);
-                if (fontId != -1) {
+                fontId = a.getResourceId(R.styleable.TextViewTwoLine_descriptionFontFamily, 0);
+                if (fontId != 0) {
                     try {
                         descriptionTypeFace = ResourcesCompat.getFont(getContext(), fontId);
                     } catch (Resources.NotFoundException e) {
@@ -220,8 +220,8 @@ public class TextViewTwoLine extends View {
                     descriptionTypeFace = Typeface.defaultFromStyle(descriptionTextStyle);
                 }
 
-                titleTextAppearId = a.getResourceId(R.styleable.TextViewTwoLine_titleTextAppearance, -1);
-                descriptionTextAppearId = a.getResourceId(R.styleable.TextViewTwoLine_descriptionTextAppearance, -1);
+                titleTextAppearId = a.getResourceId(R.styleable.TextViewTwoLine_titleTextAppearance, 0);
+                descriptionTextAppearId = a.getResourceId(R.styleable.TextViewTwoLine_descriptionTextAppearance, 0);
 
                 int defaultTextSize = spToPx(14f);
                 titleTextSize = a.getDimensionPixelSize(R.styleable.TextViewTwoLine_titleTextSize, defaultTextSize);
@@ -272,13 +272,13 @@ public class TextViewTwoLine extends View {
     private void createTitleLayout(int width) {
         SpannableStringBuilder stringBuilder;
 
-        if (titleTextAppearId != -1) {
+        if (titleTextAppearId != 0) {
             stringBuilder = getSpannableStringBuilder(textTitle.toString(), titleTextAppearId);
         } else {
             stringBuilder = new SpannableStringBuilder(textTitle);
         }
 
-        if (textTitleColor != -1) {
+        if (textTitleColor != 0) {
             stringBuilder.setSpan(new ForegroundColorSpan(textTitleColor), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
@@ -307,13 +307,13 @@ public class TextViewTwoLine extends View {
     private void createDescriptionLayout(int width) {
         SpannableStringBuilder stringBuilder;
 
-        if (descriptionTextAppearId != -1) {
+        if (descriptionTextAppearId != 0) {
             stringBuilder = getSpannableStringBuilder(textDescription.toString(), descriptionTextAppearId);
         } else {
             stringBuilder = new SpannableStringBuilder(textDescription);
         }
 
-        if (descriptionColor != -1) {
+        if (descriptionColor != 0) {
             stringBuilder.setSpan(new ForegroundColorSpan(descriptionColor), 0, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
@@ -467,7 +467,7 @@ public class TextViewTwoLine extends View {
 
         if (leftDrawableCompat != null) {
             drawableSize = leftDrawableCompat.getIntrinsicWidth();
-            if (drawableTintColor != -1) {
+            if (drawableTintColor != 0) {
                 leftDrawableCompat.mutate().setColorFilter(drawableTintColor, PorterDuff.Mode.SRC_IN);
             } else {
                 leftDrawableCompat.mutate().setColorFilter(null);
@@ -560,7 +560,7 @@ public class TextViewTwoLine extends View {
     public Parcelable onSaveInstanceState() {
         Parcelable superSate = super.onSaveInstanceState();
 
-        if (!TextUtils.isEmpty(textTitle) || !TextUtils.isEmpty(textDescription) || leftDrawableCompatId != -1) {
+        if (!TextUtils.isEmpty(textTitle) || !TextUtils.isEmpty(textDescription) || leftDrawableCompatId != 0) {
 
             SavedState ss = new SavedState(superSate);
 
@@ -572,7 +572,7 @@ public class TextViewTwoLine extends View {
                 ss.textDescription = textDescription;
             }
 
-            if (leftDrawableCompatId != -1) {
+            if (leftDrawableCompatId != 0) {
                 ss.leftDrawableId = leftDrawableCompatId;
             }
 
@@ -601,7 +601,7 @@ public class TextViewTwoLine extends View {
             textDescription = ss.textDescription;
         }
 
-        if (ss.leftDrawableId != -1) {
+        if (ss.leftDrawableId != 0) {
             leftDrawableCompatId = ss.leftDrawableId;
             leftDrawableCompat = AppCompatResources.getDrawable(getContext(), leftDrawableCompatId);
         }
@@ -611,7 +611,7 @@ public class TextViewTwoLine extends View {
 
         CharSequence textTitle = null;
         CharSequence textDescription = null;
-        int leftDrawableId = -1;
+        int leftDrawableId = 0;
 
         SavedState(Parcelable superState) {
             super(superState);
