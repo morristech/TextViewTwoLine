@@ -104,8 +104,7 @@ public class TextViewTwoLine extends View {
         updateContentBounds();
         requestLayout(); // recall onMeasure
     }
-
-    // use this constructor if creating MyView programmatically
+    
     public TextViewTwoLine(Context context) {
         super(context);
         initTwoTextView(context, null, 0);
@@ -249,8 +248,7 @@ public class TextViewTwoLine extends View {
             int width = (int) titleTextPaint.measureText(textTitle.toString());
             createTitleLayout(width);
         }
-
-
+        
         // init for description
         desTextPaint = new TextPaint();
         desTextPaint.setAntiAlias(true);
