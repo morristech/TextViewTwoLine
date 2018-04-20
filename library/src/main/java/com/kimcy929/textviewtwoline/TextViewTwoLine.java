@@ -250,6 +250,9 @@ public class TextViewTwoLine extends View {
         titleTextPaint.setAntiAlias(true);
         titleTextPaint.setTextSize(titleTextSize);
         titleTextPaint.setTextLocale(Locale.getDefault());
+        if (titleTypeFace != null) {
+            titleTextPaint.setTypeface(titleTypeFace);
+        }
 
         // default to a single line of text
         if (!TextUtils.isEmpty(textTitle)) {
@@ -262,6 +265,9 @@ public class TextViewTwoLine extends View {
         desTextPaint.setAntiAlias(true);
         desTextPaint.setTextSize(descriptionTextSize);
         desTextPaint.setTextLocale(Locale.getDefault());
+        if (descriptionTypeFace != null) {
+            desTextPaint.setTypeface(descriptionTypeFace);
+        }
 
         // default to a single line of text
         if (!TextUtils.isEmpty(textDescription)) {
