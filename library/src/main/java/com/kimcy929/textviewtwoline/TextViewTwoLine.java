@@ -237,6 +237,14 @@ public class TextViewTwoLine extends View {
             }
         }
 
+        if (titleTextAppearId != 0) {
+            titleTextSize = getTextSizeFromTextAppearance(titleTextAppearId, titleTextSize);
+        }
+
+        if (descriptionTextAppearId != 0) {
+            descriptionTextSize = getTextSizeFromTextAppearance(descriptionTextAppearId, descriptionTextSize);
+        }
+
         // init for title
         titleTextPaint = new TextPaint();
         titleTextPaint.setAntiAlias(true);
@@ -260,6 +268,15 @@ public class TextViewTwoLine extends View {
             int width = (int) desTextPaint.measureText(textDescription.toString());
             createDescriptionLayout(width);
         }
+    }
+
+    private int getTextSizeFromTextAppearance(int textAppearanceId, int defaultTextSize) {
+        TextAppearanceSpan textAppearanceSpan = new TextAppearanceSpan(getContext(), textAppearanceId);
+        int textSize = textAppearanceSpan.getTextSize();
+        if (textSize != -1) {
+            return textSize;
+        }
+        return defaultTextSize;
     }
 
     @NonNull
@@ -647,10 +664,6 @@ public class TextViewTwoLine extends View {
             leftDrawableId = in.readInt();
         }
     }
-
-    /*private int dpToPx(final float dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
-    }*/
 
     public int spToPx(float sp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, getContext().getResources().getDisplayMetrics());
