@@ -1,5 +1,6 @@
 package com.example.kimcy929.textviewtwoline;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,42 +29,30 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnChangeText = findViewById(R.id.btnChangeText);
 
-        btnChangeText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textViewTwoLine.setTextTitle(getString(R.string.shutter_sound));
-                textViewTwoLine.setTextDescription(getString(R.string.shutter_sound_description));
+        btnChangeText.setOnClickListener(v -> {
+            textViewTwoLine.setTextTitle(getString(R.string.fix_for_nexus));
+            textViewTwoLine.setTextDescription(getString(R.string.fix_for_nexus_description));
 
-                textViewTwoLine.setLeftDrawableCompat(R.drawable.ic_vibration_black_24dp);
-//
-//               textViewTwoLine.setText(null, "");
-            }
+            textViewTwoLine.setLeftDrawableCompat(R.drawable.ic_smartphone_black_24dp);
+
+            //textViewTwoLine.setText(null, "");
         });
 
         RelativeLayout btnHideVideo = findViewById(R.id.btnHideVideo);
         RelativeLayout btnTranslate = findViewById(R.id.btnTranslate);
-        //RelativeLayout btnShutterSound = findViewById(R.id.btnShutterSound);
 
-        btnHideVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnHideVideo.setOnClickListener(v -> {
 
-            }
         });
 
-        btnTranslate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnTranslate.setOnClickListener(v -> {
 
-            }
         });
 
-        /*btnShutterSound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/
+        TextViewTwoLine btnSystemSettings = findViewById(R.id.btnSystemSettings);
+        btnSystemSettings.setOnClickListener(v -> {
+            startActivity(new Intent(this, FakeSettingsActivity.class));
+        });
     }
 
     private void showBackArrow() {

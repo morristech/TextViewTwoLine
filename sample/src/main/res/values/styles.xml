@@ -7,37 +7,11 @@
 
     </style>
 
-    <style name="TextViewTwoTextLineTextTitleStyle">
+    <style name="SettingsItemStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_alignParentStart">true</item>
-        <item name="android:layout_alignParentTop">true</item>
-        <item name="android:layout_centerVertical">true</item>
-
-
-        <item name="android:paddingStart">@dimen/drawable_padding</item> <!-- 24dp for center -->
-        <item name="android:paddingEnd">?attr/listPreferredItemPaddingRight</item>
-
-        <item name="android:paddingTop">@dimen/item_padding</item>
-        <item name="android:paddingBottom">@dimen/item_padding</item>
-
-        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
-        <item name="drawablePadding">@dimen/drawable_padding</item> <!-- 24dp for center -->
-        <item name="drawableTintColor">@color/colorDrawableTint</item>
-        <!--<item name="titleFontFamily">@font/value_bold</item>
-        <item name="descriptionFontFamily">@font/lato_bold</item>-->
-        <item name="textTitleColor">@color/colorDrawableTint</item>
-        <item name="textDescriptionColor">@color/colorTextDescription</item>
-        <item name="keepDefaultLineSpacing">true</item>
-    </style>
-
-    <style name="TextViewTwoTextLineTextTitleStyle.SystemSettingsItem">
-        <item name="android:minHeight">?attr/listPreferredItemHeight</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="drawablePadding">32dp</item>
         <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:minHeight">?attr/listPreferredItemHeight</item>
     </style>
 
     <style name="SwitchCompatStyle">
@@ -48,12 +22,56 @@
         <item name="android:layout_marginEnd">?attr/listPreferredItemPaddingRight</item>
     </style>
 
-    <style name="SettingsItemStyle">
+    <style name="TextViewTwoTextLineTextTitleStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:minHeight">?attr/listPreferredItemHeight</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingStart">@dimen/item_padding</item> <!-- 24dp for center -->
+        <item name="android:paddingEnd">?attr/listPreferredItemPaddingRight</item>
+        <item name="android:paddingTop">@dimen/item_padding</item>
+        <item name="android:paddingBottom">@dimen/item_padding</item>
 
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+
+        <item name="drawablePadding">@dimen/drawable_padding</item> <!-- 24dp for center -->
+        <item name="drawableTintColor">@color/colorDrawableTint</item>
+
+        <item name="titleFontFamily">@font/lato_bold</item>
+        <item name="descriptionFontFamily">@font/pt_mono_75f</item>
+
+        <item name="textTitleColor">@color/colorDrawableTint</item>
+        <item name="textDescriptionColor">@color/colorTextDescription</item>
+
+        <item name="keepDefaultLineSpacing">true</item>
+    </style>
+
+    <style name="SystemSettingsItemStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">?attr/listPreferredItemHeight</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:paddingStart">@dimen/item_padding</item> <!-- 24dp for center -->
+        <item name="android:paddingEnd">?attr/listPreferredItemPaddingRight</item>
+
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <!--<item name="descriptionTextAppearance">@style/TextAppearance.AppCompat.Large</item>-->
+
+        <item name="drawablePadding">@dimen/drawable_padding</item> <!-- 24dp for center -->
+        <item name="drawableTintColor">@color/colorDrawableTint</item>
+
+        <item name="titleFontFamily">@font/value_bold</item>
+        <item name="descriptionFontFamily">@font/lato_regular</item>
+
+        <item name="textTitleColor">@color/colorDrawableTint</item>
+        <item name="textDescriptionColor">@color/colorTextDescription</item>
+
+        <item name="keepDefaultLineSpacing">true</item>
+        <!--<item name="TextViewTwoLineTitleTextStyle">italic</item>-->
+        <!--<item name="TextViewTwoLineDescriptionTextStyle">bold</item>-->
     </style>
 
 </resources>

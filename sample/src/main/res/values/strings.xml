@@ -8,8 +8,6 @@
     <string name="support_translate">Translation</string>
     <string name="support_translate_description">Would you like to translate this app to your own language or fix mistakes in translation? Tap here to email us to request translation document</string>
 
-    <string name="shutter_sound">Shutter sound</string>
-    <string name="shutter_sound_description">Enable shutter sound when start and stop recording</string>
     <string name="system_activity_title">System</string>
 
 </resources>
