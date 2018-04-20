@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/systemSettingsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_language_black_24dp"
+            app:textTitle="Language &amp; input"
+            app:textDescription="Gboard"/>
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_gesture_black_24dp"
+            app:textTitle="Gesture" />
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_access_time_black_24dp"
+            app:textTitle="Date &amp; time"
+            app:textDescription="GMT +07:00 Indochina Time"/>
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_backup_black_24dp"
+            app:textTitle="Backup"
+            app:textDescription="Off"/>
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_system_update_black_24dp"
+            app:textTitle="System update"
+            app:textDescription="Update to Android 8.1.0"/>
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_restore_black_24dp"
+            app:textTitle="Reset options"
+            app:textDescription="Network, apps, or device can be reset"/>
+
+        <com.kimcy929.textviewtwoline.TextViewTwoLine
+            style="@style/TextViewTwoTextLineTextTitleStyle.SystemSettingsItem"
+            app:leftDrawableCompat="@drawable/ic_info_outline_black_24dp"
+            app:textTitle="About emulated device"
+            app:textDescription="Android DK built for x86" />
+
+    </LinearLayout>
+</ScrollView>

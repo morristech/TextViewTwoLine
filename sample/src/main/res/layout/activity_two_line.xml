@@ -47,8 +47,8 @@
             style="@style/TextViewTwoTextLineTextTitleStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#ff0606"
-            android:minHeight="?attr/listPreferredItemHeightLarge"
+            android:background="#e1e1e1"
+            android:minHeight="?attr/listPreferredItemHeight"
             app:leftDrawableCompat="@drawable/ic_volume_up_black_24dp"
             app:textDescription="@string/shutter_sound"
             app:textTitle="@string/shutter_sound" />

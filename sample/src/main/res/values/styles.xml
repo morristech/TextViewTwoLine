@@ -14,6 +14,7 @@
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_centerVertical">true</item>
 
+
         <item name="android:paddingStart">@dimen/drawable_padding</item> <!-- 24dp for center -->
         <item name="android:paddingEnd">?attr/listPreferredItemPaddingRight</item>
 
@@ -28,6 +29,15 @@
         <item name="textTitleColor">@color/colorDrawableTint</item>
         <item name="textDescriptionColor">@color/colorTextDescription</item>
         <item name="keepDefaultLineSpacing">true</item>
+    </style>
+
+    <style name="TextViewTwoTextLineTextTitleStyle.SystemSettingsItem">
+        <item name="android:minHeight">?attr/listPreferredItemHeight</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="drawablePadding">32dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="SwitchCompatStyle">

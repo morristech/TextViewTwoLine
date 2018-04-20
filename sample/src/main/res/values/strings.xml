@@ -10,5 +10,6 @@
 
     <string name="shutter_sound">Shutter sound</string>
     <string name="shutter_sound_description">Enable shutter sound when start and stop recording</string>
+    <string name="system_activity_title">System</string>
 
 </resources>

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 textViewTwoLine.setTextTitle(getString(R.string.shutter_sound));
                 textViewTwoLine.setTextDescription(getString(R.string.shutter_sound_description));
 
-                textViewTwoLine.setLeftDrawable(R.drawable.ic_vibration_black_24dp);
+                textViewTwoLine.setLeftDrawableCompat(R.drawable.ic_vibration_black_24dp);
 //
 //               textViewTwoLine.setText(null, "");
             }
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout btnHideVideo = findViewById(R.id.btnHideVideo);
         RelativeLayout btnTranslate = findViewById(R.id.btnTranslate);
-        RelativeLayout btnShutterSound = findViewById(R.id.btnShutterSound);
+        //RelativeLayout btnShutterSound = findViewById(R.id.btnShutterSound);
 
         btnHideVideo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnShutterSound.setOnClickListener(new View.OnClickListener() {
+        /*btnShutterSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        });*/
     }
 
     private void showBackArrow() {
